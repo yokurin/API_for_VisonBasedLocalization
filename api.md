@@ -2,8 +2,10 @@
 
 REST API Doc
 
+## HOST
+` localhost:3000/api/v1 `
 
-## Login [/auth/login]
+## Login [/login]
 
 ### Login [POST]
 
@@ -12,7 +14,7 @@ REST API Doc
     + Header
 
             Accept-Charset: utf-8
-            <!--Connection: keep-alive-->
+            Content-Type: application/json
 
     + Body
 
@@ -40,7 +42,7 @@ REST API Doc
     + Header
 
             Accept-Charset: utf-8
-            <!--Connection: keep-alive-->
+            Content-Type: application/json
 
     + Body
 
@@ -68,7 +70,7 @@ REST API Doc
     + Header
 
             Accept-Charset: utf-8
-            <!--Connection: keep-alive-->
+            Content-Type: application/json
 
     + Body
 
