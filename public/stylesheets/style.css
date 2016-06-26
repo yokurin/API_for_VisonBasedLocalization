@@ -1,8 +1,25 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html,body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Quicksand', "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", 'メイリオ' , Meiryo , Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: #00B7FF;
+/* drawer*/
+/*.mdl-layout__drawer{
+    width: 320px !important;
+}
+.mdl-layout__content{
+    margin-left: !important;
+    right: 0px;
+    width: calc(100% - 320px);
+}*/
+.images-list{
+    width: 100%;
+    padding: 0;
+    margin: 2%;
+}
+.dl-list__item img{
+    padding: 8px;
+    width: calc( (100% - 120px) / 5 );
 }

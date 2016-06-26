@@ -5,6 +5,7 @@ var users = require('./users');
 var login = require('./login');
 var uploadImage = require('./uploadImage');
 var formAnswer = require('./formAnswer');
+var images = require('./images');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -23,6 +24,7 @@ router.use('/users', users);
 router.use('/login', login);
 router.use('/upload/image', uploadImage);
 router.use('/formAnswer', formAnswer);
+router.use('/show/images', images);
 
 
 module.exports = router;
