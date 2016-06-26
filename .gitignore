@@ -1,0 +1,9 @@
+
+## API
+node_modules
+uploads/images/
+
+# others
+*.swp
+!.gitkeep
+.DS_Store

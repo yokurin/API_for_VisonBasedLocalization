@@ -1,0 +1,446 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema gojo
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema gojo
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `visionbased` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `visionbased` ;
+
+-- -----------------------------------------------------
+-- Table `visionbased`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `visionbased`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT,
+  `uuid` VARCHAR(255) NOT NULL COMMENT 'uuid',
+  `last_logined` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新日時',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC)  COMMENT '');
+
+
+-- -----------------------------------------------------
+-- Table `visionbased`.`form`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `visionbased`.`form` (
+  `uuid` INT NOT NULL COMMENT 'UUID',
+  `name` VARCHAR(255) NOT NULL COMMENT 'name',
+  `sex` VARCHAR(20) NOT NULL COMMENT 'sex',
+  `useful` INT NOT NULL COMMENT '使いやすさ',
+  `joyful` INT NOT NULL COMMENT '楽しさ',
+  `opinion` VARCHAR(512) NOT NULL COMMENT '意見'
+
+
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`elderly_has_demands`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`elderly_has_demands` (
+--   `elderly_id` INT NOT NULL COMMENT '',
+--   `string` VARCHAR(45) NOT NULL COMMENT '',
+--   INDEX `fk_demand_elderly1_idx` (`elderly_id` ASC)  COMMENT '',
+--   PRIMARY KEY (`elderly_id`, `string`)  COMMENT '',
+--   CONSTRAINT `fk_demand_elderly1`
+--     FOREIGN KEY (`elderly_id`)
+--     REFERENCES `gojo`.`elderlies` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`users_has_elderlies`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`users_has_elderlies` (
+--   `user_id` INT NOT NULL COMMENT '',
+--   `elderly_id` INT NOT NULL COMMENT '',
+--   `relationship` INT NOT NULL COMMENT '',
+--   PRIMARY KEY (`user_id`, `elderly_id`)  COMMENT '',
+--   INDEX `fk_users_has_elderly_elderly1_idx` (`elderly_id` ASC)  COMMENT '',
+--   INDEX `fk_users_has_elderly_users1_idx` (`user_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_users_has_elderly_users1`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_users_has_elderly_elderly1`
+--     FOREIGN KEY (`elderly_id`)
+--     REFERENCES `gojo`.`elderlies` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`user_has_care_experiences`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`user_has_care_experiences` (
+--   `user_id` INT NOT NULL COMMENT '',
+--   `title` VARCHAR(32) NOT NULL COMMENT '',
+--   `story` VARCHAR(512) NOT NULL COMMENT '',
+--   PRIMARY KEY (`user_id`, `title`)  COMMENT '',
+--   INDEX `fk_care_experiences_users1_idx` (`user_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_care_experiences_users1`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`groups`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`groups` (
+--   `id` INT NOT NULL COMMENT '',
+--   `title` VARCHAR(45) NULL COMMENT '',
+--   PRIMARY KEY (`id`)  COMMENT '')
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`messages`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`messages` (
+--   `id` INT NOT NULL COMMENT '',
+--   `groups_id` INT NOT NULL COMMENT '',
+--   `sender_user_id` INT NOT NULL COMMENT '',
+--   `send_time` DATETIME NOT NULL COMMENT '',
+--   `text` VARCHAR(512) NOT NULL COMMENT '',
+--   PRIMARY KEY (`id`)  COMMENT '',
+--   INDEX `fk_message_users1_idx` (`sender_user_id` ASC)  COMMENT '',
+--   UNIQUE INDEX `id_UNIQUE` (`id` ASC)  COMMENT '',
+--   INDEX `fk_messages_groups1_idx` (`groups_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_message_users1`
+--     FOREIGN KEY (`sender_user_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_messages_groups1`
+--     FOREIGN KEY (`groups_id`)
+--     REFERENCES `gojo`.`groups` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`notifications`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`notifications` (
+--   `user_id` INT NOT NULL COMMENT '',
+--   `id` INT NOT NULL COMMENT '',
+--   PRIMARY KEY (`user_id`, `id`)  COMMENT '',
+--   INDEX `fk_notifications_users1_idx` (`user_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_notifications_users1`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`choices`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`choices` (
+--   `field_name` VARCHAR(45) NOT NULL COMMENT '',
+--   `id` INT NOT NULL COMMENT '',
+--   `strings` VARCHAR(45) NOT NULL COMMENT '',
+--   PRIMARY KEY (`field_name`, `id`)  COMMENT '')
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`users_has_choices`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`users_has_choices` (
+--   `user_id` INT NOT NULL COMMENT '',
+--   `field_name` VARCHAR(45) NOT NULL COMMENT '',
+--   `choice_id` INT NOT NULL COMMENT '',
+--   `private` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '',
+--   PRIMARY KEY (`user_id`, `field_name`, `choice_id`)  COMMENT '',
+--   INDEX `fk_users_has_choices_choices1_idx` (`field_name` ASC, `choice_id` ASC)  COMMENT '',
+--   INDEX `fk_users_has_choices_users1_idx` (`user_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_users_has_choices_users1`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_users_has_choices_choices1`
+--     FOREIGN KEY (`field_name` , `choice_id`)
+--     REFERENCES `gojo`.`choices` (`field_name` , `id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`users_has_groups`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`users_has_groups` (
+--   `users_id` INT NOT NULL COMMENT '',
+--   `groups_id` INT NOT NULL COMMENT '',
+--   `read_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '',
+--   PRIMARY KEY (`users_id`, `groups_id`)  COMMENT '',
+--   INDEX `fk_users_has_groups_groups1_idx` (`groups_id` ASC)  COMMENT '',
+--   INDEX `fk_users_has_groups_users1_idx` (`users_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_users_has_groups_users1`
+--     FOREIGN KEY (`users_id`)
+--     REFERENCES `gojo`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_users_has_groups_groups1`
+--     FOREIGN KEY (`groups_id`)
+--     REFERENCES `gojo`.`groups` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`elderlies_has_choices`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`elderlies_has_choices` (
+--   `elderly_id` INT NOT NULL COMMENT '',
+--   `field_name` VARCHAR(45) NOT NULL COMMENT '',
+--   `choice_id` INT NOT NULL COMMENT '',
+--   `private` TINYINT(1) NOT NULL COMMENT '',
+--   PRIMARY KEY (`elderly_id`, `field_name`, `choice_id`)  COMMENT '',
+--   INDEX `fk_elderlies_has_choices_choices1_idx` (`field_name` ASC, `choice_id` ASC)  COMMENT '',
+--   INDEX `fk_elderlies_has_choices_elderlies1_idx` (`elderly_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_elderlies_has_choices_elderlies1`
+--     FOREIGN KEY (`elderly_id`)
+--     REFERENCES `gojo`.`elderlies` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_elderlies_has_choices_choices1`
+--     FOREIGN KEY (`field_name` , `choice_id`)
+--     REFERENCES `gojo`.`choices` (`field_name` , `id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Table `gojo`.`users_has_elderlies_has_choices`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `gojo`.`users_has_elderlies_has_choices` (
+--   `user_id` INT NOT NULL COMMENT '',
+--   `elderly_id` INT NOT NULL COMMENT '',
+--   `choices_field_name` VARCHAR(45) NOT NULL COMMENT '',
+--   `choices_id` INT NOT NULL COMMENT '',
+--   `private` TINYINT(1) NOT NULL COMMENT '',
+--   PRIMARY KEY (`user_id`, `elderly_id`, `choices_field_name`, `choices_id`)  COMMENT '',
+--   INDEX `fk_users_has_elderlies_has_choices_choices1_idx` (`choices_field_name` ASC, `choices_id` ASC)  COMMENT '',
+--   INDEX `fk_users_has_elderlies_has_choices_users_has_elderlies1_idx` (`user_id` ASC, `elderly_id` ASC)  COMMENT '',
+--   CONSTRAINT `fk_users_has_elderlies_has_choices_users_has_elderlies1`
+--     FOREIGN KEY (`user_id` , `elderly_id`)
+--     REFERENCES `gojo`.`users_has_elderlies` (`user_id` , `elderly_id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_users_has_elderlies_has_choices_choices1`
+--     FOREIGN KEY (`choices_field_name` , `choices_id`)
+--     REFERENCES `gojo`.`choices` (`field_name` , `id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+--
+-- CREATE USER 'test' IDENTIFIED BY 'test';
+--
+-- GRANT ALL ON `gojo`.* TO 'test';
+--
+-- SET SQL_MODE=@OLD_SQL_MODE;
+-- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+-- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`users`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`users` (`id`, `email`, `password`, `user_name`, `icon`, `birthday`, `sex`, `zipcode`, `prefecture`, `city`, `cared_years`, `is_care_experience_in_home_together`, `is_care_experience_in_home_separation`, `is_care_experience_in_facility`, `story`, `is_acceptable_consultation`, `viewed_times`, `counsulted_times`, `private_fields`, `create_time`, `modify_time`) VALUES (1, 'test@test.com', 'testpass', '田中 太郎', 'http://my/icon/address.com', '2016-02-19 19:19:25', 0, 1231234, '北海道', '札幌', 1, false, false, false, '私には認知症にかかってしまった父がいます。', false, 0, 0, '\"city\"', '2016-02-19 19:19:25', '2016-02-19 19:19:25');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`elderlies`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`elderlies` (`id`, `zipcode`, `prefecture`, `city`, `job`, `dementia`, `private_fields`, `create_time`, `modify_time`) VALUES (1, 1231234, '北海道', '札幌', '教員', true, '\"city\",\"job\"', '2016-02-19 12:20:25', '2016-02-19 12:20:25');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`elderly_has_personalities`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`elderly_has_personalities` (`elderly_id`, `string`) VALUES (1, '頑固');
+-- INSERT INTO `gojo`.`elderly_has_personalities` (`elderly_id`, `string`) VALUES (1, '人見知り');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`elderly_has_demands`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`elderly_has_demands` (`elderly_id`, `string`) VALUES (1, '散歩がしたい');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`users_has_elderlies`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`users_has_elderlies` (`user_id`, `elderly_id`, `relationship`) VALUES (1, 1, 1);
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`user_has_care_experiences`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`user_has_care_experiences` (`user_id`, `title`, `story`) VALUES (1, '介護のはじまり・準備', '父が認知症にかかったのではないかと思ったのは、ある出来事がきっかけでした。');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`choices`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('work_balance', 0, 'フルタイムで仕事');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('work_balance', 1, 'パート・アルバイトで仕事');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('work_balance', 2, '自宅で仕事');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('work_balance', 3, '介護に専念（仕事をしていない）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('work_balance', 4, '今は介護していない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_status', 0, 'これから介護準備');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_status', 1, 'いま介護中');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_status', 2, '過去に介護していた');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 0, '実母');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 1, '実父');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 2, '義理母');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 3, '義理父');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 4, '配偶者');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 5, '祖父');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 6, '祖母');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('relationship', 7, 'その他（親戚、子供など）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 0, '〜40代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 1, '50代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 2, '60代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 3, '70代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 4, '80代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 5, '90代');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('age', 6, '100代〜');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 0, '自立');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 1, '要支援1');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 2, '要支援2');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 3, '要介護1');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 4, '要介護2');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 5, '要介護3');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 6, '要介護4');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 7, '要介護5');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 8, '認定中');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_rank', 9, '申請していない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('sick', 0, '脳卒中');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('sick', 1, '脳のケガ');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('sick', 2, '認知症');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('sick', 3, '高齢による衰弱');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('sick', 4, 'その他');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 0, '手足が動かない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 1, 'ろれつが回らない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 2, '言葉が喋れない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 3, '言葉が理解できない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 4, 'うまく飲み込めない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 5, '記憶ができない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 6, '視野がせまい');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 7, 'やる気が出ない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('handicap', 8, 'その他');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 0, '入浴介助');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 1, '排泄介助');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 2, '食事介助');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 3, '着衣など身辺介助');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 4, '外出介助');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 5, '役所や入院手続');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 6, '金銭管理');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 7, '社会参加支援');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 8, '看取り');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_need', 9, 'その他');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 0, 'デイサービス');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 1, '通所リハ');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 2, '訪問介護');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 3, '訪問リハ');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 4, '訪問看護');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 5, '居宅療養管理指導');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 6, 'ショートステイ');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 7, '定期巡回・随時対応');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 8, '小規模多機能');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 9, '介護老人保険施設（老健）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 10, '特別養護老人ホーム（特養）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 11, '療養型医療施設');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_service', 12, 'その他');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('mental_state', 0, 'ショック、戸惑い、パニック');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('mental_state', 1, '認めたくない、腹がたつ、気が重い');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('mental_state', 2, '割り切るしかない、もう諦めている');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('mental_state', 3, '理解ができた、受け入れることができた');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('food_rank', 0, '口から自分で食べる');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('food_rank', 1, '口から食べるが介助が必要');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('food_rank', 2, '口から食べられない');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_policy', 0, '在宅（同居）で介護');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_policy', 1, '在宅（別居）で介護');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('care_policy', 2, '施設で介護');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('elderly_home', 0, '長期施設（特養、老人ホーム、グループホーム）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('elderly_home', 1, '短期施設（老健、病院、ショートステイなど）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('elderly_home', 2, '在宅（同居）');
+-- INSERT INTO `gojo`.`choices` (`field_name`, `id`, `strings`) VALUES ('elderly_home', 3, '在宅（別居）');
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`users_has_choices`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`users_has_choices` (`user_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'work_balance', 1, false);
+-- INSERT INTO `gojo`.`users_has_choices` (`user_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'care_status', 0, false);
+-- INSERT INTO `gojo`.`users_has_choices` (`user_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'care_service', 0, false);
+-- INSERT INTO `gojo`.`users_has_choices` (`user_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'care_service', 2, false);
+-- INSERT INTO `gojo`.`users_has_choices` (`user_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'mental_state', 0, false);
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`elderlies_has_choices`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`elderlies_has_choices` (`elderly_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'sick', 1, false);
+-- INSERT INTO `gojo`.`elderlies_has_choices` (`elderly_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'handicap', 1, false);
+-- INSERT INTO `gojo`.`elderlies_has_choices` (`elderly_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'handicap', 2, false);
+-- INSERT INTO `gojo`.`elderlies_has_choices` (`elderly_id`, `field_name`, `choice_id`, `private`) VALUES (1, 'careneed', 2, false);
+--
+-- COMMIT;
+--
+--
+-- -- -----------------------------------------------------
+-- -- Data for table `gojo`.`users_has_elderlies_has_choices`
+-- -- -----------------------------------------------------
+-- START TRANSACTION;
+-- USE `gojo`;
+-- INSERT INTO `gojo`.`users_has_elderlies_has_choices` (`user_id`, `elderly_id`, `choices_field_name`, `choices_id`, `private`) VALUES (1, 1, 'relationship', 3, false);
+--
+-- COMMIT;

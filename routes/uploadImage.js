@@ -1,0 +1,139 @@
+var async = require("async");
+var express = require('express');
+var router = express.Router();
+var moment = require('moment');
+var multipart = require('connect-multiparty');
+
+var fs = require('fs');
+
+var model = require('../model');
+
+var multipartMiddleware = multipart();
+/* POST Image */
+router.post('/', multipartMiddleware, function(req, res, _next) {
+
+	var consoleColorgreen = '\u001b[32m';
+	var consoleColorreset   = '\u001b[0m';
+
+	console.log(consoleColorgreen+"uuid:"+consoleColorreset + req.body.uuid);
+	console.log(consoleColorgreen+"image"+consoleColorreset,req.files.image);
+
+	var date = moment().format('YYYY-MM-DD');
+	var time = moment().format('HH_mm_ss');
+	var dir = process.cwd();
+	var uuid;
+	var image;
+	var dirpathDate = dir + '/uploads/images/' + date;
+	var dirpathUuid;
+	var filepath;
+
+	var _isDateDirExists;
+	var _isUuidDirExists;
+	// Confirm UUID and Date Directory Promise async.js
+	async.series([
+		function(next) {
+			if(!req.body.uuid || !req.files.image) {
+				return res.status(500).send({
+					message: 'no parameter uuid or image',
+					error: []
+				});
+			}
+			uuid = req.body.uuid;
+			image = req.files.image.path;
+			next();
+		},
+	    function(next) {
+			dirpathUuid = dir + '/uploads/images/' + date + '/' + uuid;
+			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/' + time + '.jpeg';
+			fs.exists(dirpathDate, function(isDateDirExists) {
+				_isDateDirExists = isDateDirExists;
+				if (!isDateDirExists) {
+					fs.mkdir(dirpathDate, function(err) {
+						if(err) {
+							console.log(err);
+							return res.status(500).send({
+								message: 'Internal Server Error. \n Failed mkdir date',
+								error: [
+									{
+
+									}
+								]
+							});
+						}
+					});
+				}
+				next();
+			});
+	    },
+	    function(next) {
+	        fs.exists(dirpathUuid, function(isUuidDirExists) {
+				_isUuidDirExists = isUuidDirExists;
+				if (!isUuidDirExists) {
+					fs.mkdir(dirpathUuid, function(err) {
+						if(err) {
+							console.log(err);
+							return res.status(500).send({
+								message: 'Internal Server Error. \n Failed mkdir uuid',
+								error: [
+									{
+
+									}
+								]
+							});
+						}
+					});
+				}
+				next();
+			});
+	    },
+	    function(next) {
+			fs.readFile(req.files.image.path, function (err, data) {
+				if(err) {
+					return res.status(500).send({
+						message: 'Internal Server Error. \n Failed Read File',
+						error: [
+							{
+								error: err
+							}
+						]
+					});
+				}
+				fs.writeFile(filepath, data, function (err) {
+					if(err){
+						return res.status(500).send({
+							message: 'Internal Server Error. \n Failed Write File',
+							error: [
+								{
+									error: err
+								}
+							]
+						});
+					}
+		        });
+		    });
+			next();
+	    }
+	], function complete(err, results) {
+		//console.log('results\n', results);
+		if(err){
+			return res.status(500).send({
+				message: 'Internal Server Error. on complete',
+				error: [
+					{
+						error: err
+					}
+				]
+			});
+		}
+
+		return res.status(200).send({
+			"message": "success",
+			"errors": []
+		});
+
+	});
+
+});
+
+
+module.exports = router;
