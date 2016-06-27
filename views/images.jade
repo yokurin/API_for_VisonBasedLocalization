@@ -10,8 +10,9 @@ block content
 
         main.mdl-layout__content
           .page-content
-                if imagesList == null
-                    h2 not found    
+                if selectedUuid == null && selectedDate == null
+                    .not-found
+                        h2 not found    
                 else if selectedUuid == null && selectedDate != null
                     ul.uuids-list.mdl-list
                         h4= selectedDate
