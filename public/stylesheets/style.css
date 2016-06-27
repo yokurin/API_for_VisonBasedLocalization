@@ -14,10 +14,23 @@ html,body {
     right: 0px;
     width: calc(100% - 320px);
 }*/
-.images-list{
+
+.uuids-list, .images-list{
     width: 100%;
     padding: 0;
     margin: 2%;
+}
+.uuids-list a{
+    margin: 8px;
+    width: calc( (100% - 200px) / 2 );
+}
+.uuids-list h4{
+    color: #888;
+    font-weight: bold;
+}
+.images-list h5{
+    color: #888;
+    font-weight: bold;
 }
 .dl-list__item img{
     padding: 8px;
