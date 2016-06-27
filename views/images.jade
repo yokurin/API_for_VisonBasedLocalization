@@ -3,7 +3,7 @@ extends layout
 block content
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-drawer
         .mdl-layout__drawer
-            span.mdl-layout-title UUID
+            span.mdl-layout-title フォルダ選択
             nav.mdl-navigation
                 each uuid in uuids
                     a.mdl-navigation__link(href="?uuid="+uuid)= uuid
