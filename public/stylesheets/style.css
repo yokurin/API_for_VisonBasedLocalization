@@ -27,11 +27,7 @@ html,body {
     margin: 8px;
     width: calc( (100% - 200px) / 2 );
 }
-.uuids-list h4{
-    color: #888;
-    font-weight: bold;
-}
-.images-list h5{
+.uuids-list h4, .images-list h4{
     color: #888;
     font-weight: bold;
 }

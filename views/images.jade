@@ -18,12 +18,12 @@ block content
                         h4= selectedDate
                         each val, key in uuidsList
                             span.dl-list__item
-                                a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="?date="+ selectedDate + "&uuid="+val)= val
+                                a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--colored(href="?date="+ selectedDate + "&uuid="+val)= val
                                 
                                 //img(src="../../../../../images/" + selected + '/' + val)    
                 else 
                     ul.images-list.mdl-list
-                        h5= selectedDate + '  >  ' + selectedUuid
+                        h4= selectedDate + '  >  ' + selectedUuid
                         each val, key in imagesList
                             span.dl-list__item
                                 a(href="../../../../../images/" + selectedDate + '/' + selectedUuid + '/' + val)
