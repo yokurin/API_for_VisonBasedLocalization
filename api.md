@@ -42,14 +42,14 @@ REST API Doc
     + Header
 
             Accept-Charset: utf-8
-            Content-Type: application/json
+            Content-Type: multipart/form-data
 
     + Body
 
-            {
-                "uuid": "XXXXXXX"-XXXX-XXXX-XXXX-XXXXXXXXXXXXX",
-                "image": "base64(image)"
-            }
+
+            type="text" name="uuid" value="XXXXXXX"-XXXX-XXXX-XXXX-XXXXXXXXXXXXX",
+            type="file" name="image" value=binary
+
 
 + Response 200 (application/json)
 
