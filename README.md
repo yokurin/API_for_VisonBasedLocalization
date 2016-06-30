@@ -14,16 +14,19 @@ last update 2016/06/28
 
 ## Install
 #### install dependencies:
-` $ cd API && npm install `  
+` $ npm install `  
+
+#### Set up MySQL
+
 
 #### run the app:
 ` $ DEBUG=API:* npm start`  
 
 
-#### API List
-- [api.md](./api.md)
+## API List
+- [API Document](./api.md)
 
-#### Deploy
+## Deploy
 - Heroku
 
 ## Contribution

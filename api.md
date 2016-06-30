@@ -3,7 +3,7 @@
 REST API Doc
 
 ## HOST
-` localhost:3000/api/v1 `
+` localhost:3001/api/v1 `
 
 ## Login [/login]
 
