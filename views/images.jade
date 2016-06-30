@@ -28,3 +28,9 @@ block content
                             span.dl-list__item
                                 a(href="../../../../../images/" + selectedDate + '/' + selectedUuid + '/' + val)
                                     img(src="../../../../../images/" + selectedDate + '/' + selectedUuid + '/' + val)
+
+    script(type='text/javascript').
+        (function(){
+            setTimeout(function(){
+                location.reload();
+            }, 2000);}());
