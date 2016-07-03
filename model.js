@@ -1,7 +1,7 @@
 var model = require('knex')({
     client: 'mysql',
     connection: {
-        host: process.env.GOJO_MYSQL,
+        host: process.env.visionbased || '127.0.0.1',
         user: 'root',
         password: '',
         database: 'visionbased'
