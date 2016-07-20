@@ -46,7 +46,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 		},
 	    function(next) {
 			dirpathUuid = dir + '/uploads/images/' + date + '/' + uuid;
-			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/' + time + '.jpeg';
+			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/query.jpg';
 			fs.exists(dirpathDate, function(isDateDirExists) {
 				_isDateDirExists = isDateDirExists;
 				if (!isDateDirExists) {
