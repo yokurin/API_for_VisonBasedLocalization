@@ -128,6 +128,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 		function(next) {
+			console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
 			exec(runCommand, function(err, stdout, stderr) {
 				console.log("python results: \n", stdout);
 				// json 格納
