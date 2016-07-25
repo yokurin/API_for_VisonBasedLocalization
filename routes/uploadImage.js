@@ -172,12 +172,13 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				]
 			});
 		}
-
-		return res.status(200).send({
-			"message": "success",
-			"results": results,
-			"errors": []
-		});
+		setTimout(function(){
+			return res.status(200).send({
+				"message": "success",
+				"results": results,
+				"errors": []
+			});
+		}, 2000);
 
 	});
 
