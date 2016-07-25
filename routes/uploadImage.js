@@ -27,7 +27,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var dirpathDate = dir + '/uploads/images/' + date;
 	var dirpathUuid;
 	var filepath;
-	var runCommand = 'python ' + dir + '/localization/localization.py' + ' ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius
+	var runCommand = 'python ' + dir + '/localization/localization.py' + ' ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius;
 	var results;
 	var oldResults;
 
