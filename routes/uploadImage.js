@@ -172,7 +172,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				]
 			});
 		}
-		setTimout(function(){
+		setTimeout(function(){
 			return res.status(200).send({
 				"message": "success",
 				"results": results,
