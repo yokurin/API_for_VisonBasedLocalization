@@ -126,7 +126,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 		function(next) {
-			exec('python app.py ' filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius, function(err, stdout, stderr) {
+			exec('python app.py ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius, function(err, stdout, stderr) {
 				console.log("python results: \n", stdout);
 				// json 格納
 				results = JSON.parse(stdout);
