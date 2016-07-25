@@ -27,7 +27,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var dirpathDate = dir + '/uploads/images/' + date;
 	var dirpathUuid;
 	var filepath;
-	var runCommand = 'python ' + dir + '/localization/localization.py' + ' ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius;
+	var runCommand;
 	var results;
 	var oldResults;
 
@@ -58,6 +58,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	  function(next) {
 			dirpathUuid = dir + '/uploads/images/' + date + '/' + uuid;
 			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/image.jpg';
+			runCommand = 'python ' + dir + '/localization/localization.py' + ' ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius;
 			fs.exists(dirpathDate, function(isDateDirExists) {
 				_isDateDirExists = isDateDirExists;
 				if (!isDateDirExists) {
