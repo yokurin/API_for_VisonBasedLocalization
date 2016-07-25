@@ -178,7 +178,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				"results": results,
 				"errors": []
 			});
-		}, 2000);
+		}, 4000);
 
 	});
 
