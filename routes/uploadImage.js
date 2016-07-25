@@ -28,7 +28,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var dirpathUuid;
 	var filepath;
 	var runCommand;
-	var results;
+	var newResults;
 	var oldResults;
 
 	var _isDateDirExists;
@@ -52,7 +52,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			    direction: 0,
 			    reliability: 0,
 			    radius: 3
-			};//results? results : null;
+			};
 			next();
 		},
 	  function(next) {
@@ -132,8 +132,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			exec(runCommand, function(err, stdout, stderr) {
 				console.log("python results: \n", stdout);
 				// json 格納
-				results = stdout;
-				//results = JSON.parse(stdout);
+				//newResults = stdout;
+				newResults = JSON.parse(stdout);
 				if(err){
 					console.log("err:\n", err);
 					return res.status(500).send({
@@ -174,10 +174,10 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			});
 		}
 		setTimeout(function(){
-			console.log(results);
+			console.log(newResults);
 			return res.status(200).send({
 				"message": "success",
-				"results": results,
+				"results": newResults,
 				"errors": []
 			});
 		}, 5000);
