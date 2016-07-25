@@ -27,7 +27,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var dirpathDate = dir + '/uploads/images/' + date;
 	var dirpathUuid;
 	var filepath;
-	var results_json;
+	var results;
+	var oldResults;
 
 	var _isDateDirExists;
 	var _isUuidDirExists;
@@ -42,11 +43,20 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			}
 			uuid = req.body.uuid;
 			image = req.files.image.path;
+			oldResults = {
+			    position: {
+			    	x: 0,
+						y: 0
+					},
+			    direction: 0,
+			    reliability: 0,
+			    radius: 3
+			};//results? results : null;
 			next();
 		},
-	    function(next) {
+	  function(next) {
 			dirpathUuid = dir + '/uploads/images/' + date + '/' + uuid;
-			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/query.jpg';
+			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/image.jpg';
 			fs.exists(dirpathDate, function(isDateDirExists) {
 				_isDateDirExists = isDateDirExists;
 				if (!isDateDirExists) {
@@ -66,9 +76,9 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				}
 				next();
 			});
-	    },
-	    function(next) {
-	        fs.exists(dirpathUuid, function(isUuidDirExists) {
+	  },
+	  function(next) {
+			fs.exists(dirpathUuid, function(isUuidDirExists) {
 				_isUuidDirExists = isUuidDirExists;
 				if (!isUuidDirExists) {
 					fs.mkdir(dirpathUuid, function(err) {
@@ -87,8 +97,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				}
 				next();
 			});
-	    },
-	    function(next) {
+	  },
+		function(next) {
 			fs.readFile(req.files.image.path, function (err, data) {
 				if(err) {
 					return res.status(500).send({
@@ -114,54 +124,35 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 		        });
 		    });
 			next();
-	    },
+		},
 		function(next) {
-			// TODO Run Python Program
-			// exec('python aaa.py', function(err, stdout, stderr) {
-			// 	console.log("python results: \n", stdout);
-			// 	// json 格納
-			// 	results_json = JSON.parse(stdout);
-			// 	if(err){
-			// 		console.log("err:\n", err);
-			// 		return res.status(500).send({
-			// 			message: 'Internal Server Error. ',
-			// 			error: [
-			// 				{
-			// 					type: "exec error",
-			// 					error: err
-			// 				}
-			// 			]
-			// 		});
-			// 	}
-			// 	if(stderr){
-			// 		console.log("stderr:\n", stderr);
-			// 		return res.status(500).send({
-			// 			message: 'Internal Server Error. ',
-			// 			error: [
-			// 				{
-			// 					type: "python error",
-			// 					error: stderr
-			// 				}
-			// 			]
-			// 		});
-			// 	}
-			// });
-			exec('pwd', function(err, stdout, stderr) {
-				console.log("pwd:\n", stdout);
+			exec('python app.py ' filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius, function(err, stdout, stderr) {
+				console.log("python results: \n", stdout);
+				// json 格納
+				results = JSON.parse(stdout);
 				if(err){
 					console.log("err:\n", err);
+					return res.status(500).send({
+						message: 'Internal Server Error. ',
+						error: [
+							{
+								type: "exec error",
+								error: err
+							}
+						]
+					});
 				}
 				if(stderr){
 					console.log("stderr:\n", stderr);
-				}
-			});
-			exec('ls -l', function(err, stdout, stderr) {
-				console.log("ls -l: \n", stdout);
-				if(err){
-					console.log("err:\n", err);
-				}
-				if(stderr){
-					console.log("stderr:\n", stderr);
+					return res.status(500).send({
+						message: 'Internal Server Error. ',
+						error: [
+							{
+								type: "python error",
+								error: stderr
+							}
+						]
+					});
 				}
 			});
 			next();
@@ -181,7 +172,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 
 		return res.status(200).send({
 			"message": "success",
-			"results": {},
+			"results": results,
 			"errors": []
 		});
 
