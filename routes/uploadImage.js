@@ -39,12 +39,12 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			if (err) {
 				console.log("err", err);
 			}
-			
+
 			console.log("run_result\n", data);
-			newResults = json.parse(data);
+			newResults = JSON.parse(data);
 			return res.status(200).send({
 				"message": "success",
-				"results": json.parse(data),
+				"results": JSON.parse(data),
 				"errors": []
 			});
 		});
