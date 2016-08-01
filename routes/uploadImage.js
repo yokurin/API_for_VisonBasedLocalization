@@ -30,10 +30,26 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var runCommand;
 	var newResults;
 	var oldResults;
-	var waitTime;
 
 	var _isDateDirExists;
 	var _isUuidDirExists;
+
+	fs.watchFile(dir + 'results.txt', function (curr, prev) {
+		fs.readFile(dir + 'results.txt', function(err, data){
+			if (err) {
+				console.log("err", err);
+			}
+			
+			console.log("run_result\n", data);
+			newResults = json.parse(data);
+			return res.status(200).send({
+				"message": "success",
+				"results": json.parse(data),
+				"errors": []
+			});
+		});
+	});
+
 	// Confirm UUID and Date Directory Promise async.js
 	async.series([
 		function(next) {
@@ -47,7 +63,6 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			uuid = req.body.uuid;
 			image = req.files.image.path;
 			if(!req.body.results) {
-				waitTime = 4500;
 				oldResults = {
 				    position: {
 				    	x: 0,
@@ -58,7 +73,6 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				    radius: 0
 				};
 			} else {
-				waitTime = 6000;
 				oldResults = JSON.parse(req.body.results);
 			}
 			next();
@@ -181,15 +195,6 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				]
 			});
 		}
-		setTimeout(function(){
-			console.log("run_result\n",newResults);
-			return res.status(200).send({
-				"message": "success",
-				"results": newResults,
-				"errors": []
-			});
-		}, waitTime);
-
 	});
 
 });
