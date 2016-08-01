@@ -34,8 +34,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var _isDateDirExists;
 	var _isUuidDirExists;
 
-	fs.watchFile(dir + 'results.txt', function (curr, prev) {
-		fs.readFile(dir + 'results.txt', function(err, data){
+	fs.watchFile(dir + '/results.txt', function (curr, prev) {
+		fs.readFile(dir + '/results.txt', function(err, data){
 			if (err) {
 				console.log("err", err);
 			}
