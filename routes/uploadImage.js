@@ -47,7 +47,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			uuid = req.body.uuid;
 			image = req.files.image.path;
 			if(!req.body.results) {
-				waitTime = 13000;
+				waitTime = 8000;
 				oldResults = {
 				    position: {
 				    	x: 0,
@@ -58,7 +58,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				    radius: 0
 				};
 			} else {
-				waitTime = 9000;
+				waitTime = 7000;
 				oldResults = JSON.parse(req.body.results);
 			}
 			next();
