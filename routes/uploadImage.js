@@ -182,7 +182,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			});
 		}
 		setTimeout(function(){
-			console.log(newResults);
+			console.log("run_result\n",newResults);
 			return res.status(200).send({
 				"message": "success",
 				"results": newResults,
