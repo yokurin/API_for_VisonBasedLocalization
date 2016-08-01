@@ -36,6 +36,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	// Confirm UUID and Date Directory Promise async.js
 	async.series([
 		function(next) {
+			console.log("data\n", req.body);
 			if(!req.body.uuid || !req.files.image) {
 				return res.status(500).send({
 					message: 'no parameter uuid or image',
@@ -44,15 +45,19 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			}
 			uuid = req.body.uuid;
 			image = req.files.image.path;
-			oldResults = {
-			    position: {
-			    	x: 0,
-						y: 0
-					},
-			    direction: 0,
-			    reliability: 0,
-			    radius: 3
-			};
+			if(!req.body.results) {
+				oldResults = {
+				    position: {
+				    	x: 0,
+							y: 0
+						},
+				    direction: 0,
+				    reliability: 0,
+				    radius: 0
+				};
+			} else {
+				oldResults = req.body.results;
+			}
 			next();
 		},
 	  function(next) {
