@@ -139,7 +139,6 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				// json 格納
 				//newResults = stdout;
 				newResults = stdout;
-
 				if(err){
 					console.log("err:\n", err);
 					return res.status(500).send({
@@ -186,7 +185,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				"results": newResults,
 				"errors": []
 			});
-		}, 4000);
+		}, 5000);
 
 	});
 
