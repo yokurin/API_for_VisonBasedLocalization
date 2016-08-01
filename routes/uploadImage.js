@@ -47,7 +47,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			uuid = req.body.uuid;
 			image = req.files.image.path;
 			if(!req.body.results) {
-				waitTime = 8000;
+				waitTime = 4500;
 				oldResults = {
 				    position: {
 				    	x: 0,
