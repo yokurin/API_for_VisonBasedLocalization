@@ -138,9 +138,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				console.log("python results: \n", stdout);
 				// json 格納
 				//newResults = stdout;
-				setTimeout(function(){
-					newResults = JSON.parse(stdout);
-				}, 2000);
+				newResults = stdout;
+
 				if(err){
 					console.log("err:\n", err);
 					return res.status(500).send({
