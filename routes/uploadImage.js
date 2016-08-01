@@ -59,7 +59,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				};
 			} else {
 				waitTime = 7000;
-				oldResults = req.body.results;
+				oldResults = JSON.parse(req.body.results);
 			}
 			next();
 		},
