@@ -35,6 +35,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var _isUuidDirExists;
 
 	fs.watchFile(dir + '/results.txt', function (curr, prev) {
+		console.log("curr\n", curr);
+		console.log("prev\n", prev);
 		fs.readFile(dir + '/results.txt', 'utf8', function(err, data){
 			if (err) {
 				console.log("err", err);
@@ -42,13 +44,11 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 
 			console.log("run_result\n", JSON.parse(data));
 			newResults = JSON.parse(data);
-			setTimeout(function(){
-				return res.status(200).send({
-					"message": "success",
-					"results": JSON.parse(data),
-					"errors": []
-				});
-			},400)
+			return res.status(200).send({
+				"message": "success",
+				"results": JSON.parse(data),
+				"errors": []
+			});
 		});
 	});
 
