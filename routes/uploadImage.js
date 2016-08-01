@@ -30,6 +30,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var runCommand;
 	var newResults;
 	var oldResults;
+	var waitTime;
 
 	var _isDateDirExists;
 	var _isUuidDirExists;
@@ -46,6 +47,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			uuid = req.body.uuid;
 			image = req.files.image.path;
 			if(!req.body.results) {
+				waitTime = 13000;
 				oldResults = {
 				    position: {
 				    	x: 0,
@@ -56,6 +58,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				    radius: 0
 				};
 			} else {
+				waitTime = 7000;
 				oldResults = req.body.results;
 			}
 			next();
@@ -185,7 +188,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				"results": newResults,
 				"errors": []
 			});
-		}, 12000);
+		}, waitTime);
 
 	});
 
