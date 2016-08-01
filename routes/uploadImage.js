@@ -58,7 +58,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				    radius: 0
 				};
 			} else {
-				waitTime = 4000;
+				waitTime = 5000;
 				oldResults = JSON.parse(req.body.results);
 			}
 			next();
