@@ -4,6 +4,7 @@ var router = express.Router();
 var moment = require('moment');
 var multipart = require('connect-multiparty');
 var exec = require('child_process').exec;
+var child_process = require('child_process');
 
 var fs = require('fs');
 
@@ -34,28 +35,10 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var _isDateDirExists;
 	var _isUuidDirExists;
 
-	fs.watchFile(dir + '/results.txt', {"persistent": false}, function (curr, prev) {
-		// console.log("curr\n", curr);
-		// console.log("prev\n", prev);
-		fs.readFile(dir + '/results.txt', 'utf8', function(err, data){
-			if (err) {
-				console.log("err", err);
-			}
-
-			console.log("run_result\n", JSON.parse(data));
-			newResults = JSON.parse(data);
-			return res.status(200).send({
-				"message": "success",
-				"results": JSON.parse(data),
-				"errors": []
-			});
-		});
-	});
-
 	// Confirm UUID and Date Directory Promise async.js
 	async.series([
 		function(next) {
-			console.log("data\n", req.body);
+			console.log("request_body_data:\n", req.body);
 			if(!req.body.uuid || !req.files.image) {
 				return res.status(500).send({
 					message: 'no parameter uuid or image',
@@ -152,37 +135,50 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 		function(next) {
-			console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
-			exec(runCommand, function(err, stdout, stderr) {
-				console.log("python results: \n", stdout);
-				// json 格納
-				//newResults = stdout;
-				newResults = JSON.parse(stdout);
-				if(err){
-					console.log("err:\n", err);
-					return res.status(500).send({
-						message: 'Internal Server Error. ',
-						error: [
-							{
-								type: "exec error",
-								error: err
-							}
-						]
-					});
-				}
-				if(stderr){
-					console.log("stderr:\n", stderr);
-					return res.status(500).send({
-						message: 'Internal Server Error. ',
-						error: [
-							{
-								type: "python error",
-								error: stderr
-							}
-						]
-					});
-				}
-			});
+			// console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
+			// newResults = child_process.execSync(unCommand, options);
+
+			// exec(runCommand, function(err, stdout, stderr) {
+			// 	// console.log("python results: \n", stdout);
+			// 	// // json 格納
+			// 	// //newResults = stdout;
+			// 	// newResults = JSON.parse(stdout);
+			// 	if(err){
+			// 		console.log("err:\n", err);
+			// 		return res.status(500).send({
+			// 			message: 'Internal Server Error. ',
+			// 			error: [
+			// 				{
+			// 					type: "exec error",
+			// 					error: err
+			// 				}
+			// 			]
+			// 		});
+			// 	}
+			// 	if(stderr){
+			// 		console.log("stderr:\n", stderr);
+			// 		return res.status(500).send({
+			// 			message: 'Internal Server Error. ',
+			// 			error: [
+			// 				{
+			// 					type: "python error",
+			// 					error: stderr
+			// 				}
+			// 			]
+			// 		});
+			// 	}
+			// });
+			options = {
+				timeout: 12000, // ms
+				encoding: 'utf8' // encoding stdout code
+			}
+			newResults = child_process.execSync("node " + dir + "/test.js", options);
+			console.log(newResults);
+			next();
+		},
+		function(next){
+			var stdout_str = newResults.replace(/\n/g,"");
+			newResults = JSON.parse(stdout_str);
 			next();
 		}
 	], function complete(err, results) {
@@ -197,6 +193,12 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				]
 			});
 		}
+
+		return res.status(200).send({
+			"message": "success",
+			"results": newResults,
+			"errors": []
+		});
 	});
 
 });
