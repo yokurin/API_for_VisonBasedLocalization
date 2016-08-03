@@ -108,6 +108,7 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			});
 	  },
 		function(next) {
+			console.log("read_write");
 			fs.readFile(req.files.image.path, function (err, data) {
 				if(err) {
 					return res.status(500).send({
@@ -135,43 +136,44 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 		function(next) {
+			console.log("run");
 			console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
 			// run unix command
-			newResults = child_process.execSync(runCommand, {
-				timeout: 12000, // ms
-				encoding: 'utf8' // encoding stdout code
-			});
-			console.log(newResults);
-			// exec(runCommand, function(err, stdout, stderr) {
-			// 	// console.log("python results: \n", stdout);
-			// 	// // json 格納
-			// 	// //newResults = stdout;
-			// 	// newResults = JSON.parse(stdout);
-			// 	if(err){
-			// 		console.log("err:\n", err);
-			// 		return res.status(500).send({
-			// 			message: 'Internal Server Error. ',
-			// 			error: [
-			// 				{
-			// 					type: "exec error",
-			// 					error: err
-			// 				}
-			// 			]
-			// 		});
-			// 	}
-			// 	if(stderr){
-			// 		console.log("stderr:\n", stderr);
-			// 		return res.status(500).send({
-			// 			message: 'Internal Server Error. ',
-			// 			error: [
-			// 				{
-			// 					type: "python error",
-			// 					error: stderr
-			// 				}
-			// 			]
-			// 		});
-			// 	}
+			// newResults = child_process.execSync(runCommand, {
+			// 	timeout: 12000, // ms
+			// 	encoding: 'utf8' // encoding stdout code
 			// });
+			// console.log(newResults);
+			exec(runCommand, function(err, stdout, stderr) {
+				// console.log("python results: \n", stdout);
+				// // json 格納
+				// //newResults = stdout;
+				// newResults = JSON.parse(stdout);
+				if(err){
+					console.log("err:\n", err);
+					return res.status(500).send({
+						message: 'Internal Server Error. ',
+						error: [
+							{
+								type: "exec error",
+								error: err
+							}
+						]
+					});
+				}
+				if(stderr){
+					console.log("stderr:\n", stderr);
+					return res.status(500).send({
+						message: 'Internal Server Error. ',
+						error: [
+							{
+								type: "python error",
+								error: stderr
+							}
+						]
+					});
+				}
+			});
 
 			//newResults = child_process.execSync("node " + dir + "/test.js", options);
 			//console.log(newResults);
