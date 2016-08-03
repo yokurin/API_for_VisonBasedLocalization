@@ -135,9 +135,13 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 		function(next) {
-			// console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
-			// newResults = child_process.execSync(unCommand, options);
-
+			console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
+			// run unix command
+			newResults = child_process.execSync(runCommand, {
+				timeout: 12000, // ms
+				encoding: 'utf8' // encoding stdout code
+			});
+			console.log(newResults);
 			// exec(runCommand, function(err, stdout, stderr) {
 			// 	// console.log("python results: \n", stdout);
 			// 	// // json 格納
@@ -168,12 +172,9 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			// 		});
 			// 	}
 			// });
-			options = {
-				timeout: 12000, // ms
-				encoding: 'utf8' // encoding stdout code
-			}
-			newResults = child_process.execSync("node " + dir + "/test.js", options);
-			console.log(newResults);
+
+			//newResults = child_process.execSync("node " + dir + "/test.js", options);
+			//console.log(newResults);
 			next();
 		},
 		function(next){
