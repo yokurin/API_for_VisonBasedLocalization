@@ -15,6 +15,7 @@ REST API Doc
 
             Accept-Charset: utf-8
             Content-Type: application/json
+            Authorization: "token {token}"
 
     + Body
 
@@ -43,6 +44,7 @@ REST API Doc
 
             Accept-Charset: utf-8
             Content-Type: multipart/form-data
+            Authorization: "token {token}"
 
     + Body
 
@@ -71,6 +73,7 @@ REST API Doc
 
             Accept-Charset: utf-8
             Content-Type: application/json
+            Authorization: "token {token}"
 
     + Body
 
