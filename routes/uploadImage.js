@@ -73,23 +73,23 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 		}
 	], function complete(err, results) {
 		//console.log('results\n', results);
-		if(err){
-			return res.status(500).send({
-				message: 'Internal Server Error. on complete',
-				error: [
-					{
-						error: err
-					}
-				]
-			});
-		}
-		// console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
-		// // run unix command
-		// newResults = child_process.execSync(runCommand, {
-		// 	timeout: 12000, // ms
-		// 	encoding: 'utf8' // encoding stdout code
-		// });
-		console.log(newResults);
+		// if(err){
+		// 	return res.status(500).send({
+		// 		message: 'Internal Server Error. on complete',
+		// 		error: [
+		// 			{
+		// 				error: err
+		// 			}
+		// 		]
+		// 	});
+		// }
+		// // console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
+		// // // run unix command
+		// // newResults = child_process.execSync(runCommand, {
+		// // 	timeout: 12000, // ms
+		// // 	encoding: 'utf8' // encoding stdout code
+		// // });
+		// console.log(newResults);
 		return res.status(200).send({
 			"message": "success",
 			"results": JSON.parse(newResults),
