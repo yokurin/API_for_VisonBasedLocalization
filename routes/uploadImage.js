@@ -32,9 +32,6 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	var newResults;
 	var oldResults;
 
-	var _isDateDirExists;
-	var _isUuidDirExists;
-
 	async.series([
 		function(next) {
 			console.log("request_body_data:\n", req.body);
@@ -62,76 +59,16 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			next();
 		},
 	  function(next) {
-			dirpathUuid = dir + '/uploads/images/' + date + '/' + uuid;
-			filepath = dir + '/uploads/images/' + date + '/' + uuid + '/image.jpg';
+			filepath = dir + '/uploads/images/image.jpg';
 			runCommand = 'python ' + dir + '/localization/localization.py' + ' ' + filepath + ' ' + oldResults.position.x + ' ' + oldResults.position.y + ' ' + oldResults.direction + ' ' + oldResults.reliability + ' ' + oldResults.radius;
-			fs.exists(dirpathDate, function(isDateDirExists) {
-				_isDateDirExists = isDateDirExists;
-				if (!isDateDirExists) {
-					fs.mkdir(dirpathDate, function(err) {
-						if(err) {
-							console.log(err);
-							return res.status(500).send({
-								message: 'Internal Server Error. \n Failed mkdir date',
-								error: [
-									{
 
-									}
-								]
-							});
-						}
-					});
-				}
-				next();
-			});
-	  },
-	  function(next) {
-			fs.exists(dirpathUuid, function(isUuidDirExists) {
-				_isUuidDirExists = isUuidDirExists;
-				if (!isUuidDirExists) {
-					fs.mkdir(dirpathUuid, function(err) {
-						if(err) {
-							console.log(err);
-							return res.status(500).send({
-								message: 'Internal Server Error. \n Failed mkdir uuid',
-								error: [
-									{
-
-									}
-								]
-							});
-						}
-					});
-				}
-				next();
-			});
+			next();
 	  },
 		function(next) {
 			console.log("read_write");
-			fs.readFile(req.files.image.path, function (err, data) {
-				if(err) {
-					return res.status(500).send({
-						message: 'Internal Server Error. \n Failed Read File',
-						error: [
-							{
-								error: err
-							}
-						]
-					});
-				}
-				fs.writeFile(filepath, data, function (err) {
-					if(err){
-						return res.status(500).send({
-							message: 'Internal Server Error. \n Failed Write File',
-							error: [
-								{
-									error: err
-								}
-							]
-						});
-					}
-		        });
-		    });
+			//var data = fs.readFileSync(req.files.image.path);
+			fs.writeFileSync(filepath, req.files.image.path);
+
 			next();
 		}
 	], function complete(err, results) {
@@ -159,8 +96,9 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 			"errors": []
 		});
 	});
+});
 
-
+module.exports = router;
 	// Confirm UUID and Date Directory Promise async.js
 	// fs.exists(dirpathDate, function(isDateDirExists) {
 	// 	if(!isDateDirExists) {
@@ -245,9 +183,9 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	// 		});
 	// 	}
 	// });
+//
+//
+// });
+//
 
-
-});
-
-
-module.exports = router;
+// module.exports = router;
