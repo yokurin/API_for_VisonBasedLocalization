@@ -66,8 +66,8 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 	  },
 		function(next) {
 			console.log("read_write");
-			//var data = fs.readFileSync(req.files.image.path);
-			fs.writeFileSync(filepath, req.files.image.path);
+			var data = fs.readFileSync(req.files.image.path);
+			fs.writeFileSync(filepath, data);
 
 			next();
 		}
@@ -83,12 +83,12 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 				]
 			});
 		}
-		console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
-		// run unix command
-		newResults = child_process.execSync(runCommand, {
-			timeout: 12000, // ms
-			encoding: 'utf8' // encoding stdout code
-		});
+		// console.log(consoleColorgreen+"Run Command:\n"+consoleColorreset,runCommand);
+		// // run unix command
+		// newResults = child_process.execSync(runCommand, {
+		// 	timeout: 12000, // ms
+		// 	encoding: 'utf8' // encoding stdout code
+		// });
 		console.log(newResults);
 		return res.status(200).send({
 			"message": "success",
