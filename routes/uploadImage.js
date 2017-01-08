@@ -100,89 +100,89 @@ router.post('/', multipartMiddleware, function(req, res, _next) {
 
 module.exports = router;
 	// Confirm UUID and Date Directory Promise async.js
-	// fs.exists(dirpathDate, function(isDateDirExists) {
-	// 	if(!isDateDirExists) {
-	// 		fs.mkdir(dirpathDate, function(err) {
-	// 			fs.exists(dirpathUuid, function(isUuidDirExists) {
-	// 				if (!isUuidDirExists) {
-	// 					fs.mkdir(dirpathUuid, function(err) {
-	// 						fs.writeFile(filepath, buffer, function(err) {
-	// 							if(err) {
-	// 								console.log(err);
-	// 								return res.status(500).send({
-	// 									message: 'Internal Server Error.',
-	// 									error: [
-	// 										{
-	//
-	// 										}
-	// 									]
-	// 								});
-	// 							}
-	// 						});
-	// 					});
-	// 				} else {
-	// 					fs.writeFile(filepath, buffer, function(err) {
-	// 						if(err) {
-	// 							console.log(err);
-	// 							return res.status(500).send({
-	// 								message: 'Internal Server Error.',
-	// 								error: [
-	// 									{
-	//
-	// 									}
-	// 								]
-	// 							});
-	// 						}
-	// 					});
-	// 				}
-	// 			});
-	//
-	// 			return res.status(200).send({
-	// 				"message": "success",
-	// 				"errors": []
-	// 			});
-	// 		});
-	// 	} else {
-	// 		fs.exists(dirpathUuid, function(isUuidDirExists) {
-	// 			if (!isUuidDirExists) {
-	// 				fs.mkdir(dirpathUuid, function(err) {
-	// 					fs.writeFile(filepath, buffer, function(err) {
-	// 						if(err) {
-	// 							console.log(err);
-	// 							return res.status(500).send({
-	// 								message: 'Internal Server Error.',
-	// 								error: [
-	// 									{
-	//
-	// 									}
-	// 								]
-	// 							});
-	// 						}
-	// 					});
-	// 				});
-	// 			} else {
-	// 				fs.writeFile(filepath, buffer, function(err) {
-	// 					if(err) {
-	// 						console.log(err);
-	// 						return res.status(500).send({
-	// 							message: 'Internal Server Error.',
-	// 							error: [
-	// 								{
-	//
-	// 								}
-	// 							]
-	// 						});
-	// 					}
-	// 				});
-	// 			}
-	// 		});
-	//
-	// 		return res.status(200).send({
-	// 			"message": "success",
-	// 			"errors": []
-	// 		});
-	// 	}
-	// });
+	fs.exists(dirpathDate, function(isDateDirExists) {
+		if(!isDateDirExists) {
+			fs.mkdir(dirpathDate, function(err) {
+				fs.exists(dirpathUuid, function(isUuidDirExists) {
+					if (!isUuidDirExists) {
+						fs.mkdir(dirpathUuid, function(err) {
+							fs.writeFile(filepath, buffer, function(err) {
+								if(err) {
+									console.log(err);
+									return res.status(500).send({
+										message: 'Internal Server Error.',
+										error: [
+											{
+
+											}
+										]
+									});
+								}
+							});
+						});
+					} else {
+						fs.writeFile(filepath, buffer, function(err) {
+							if(err) {
+								console.log(err);
+								return res.status(500).send({
+									message: 'Internal Server Error.',
+									error: [
+										{
+
+										}
+									]
+								});
+							}
+						});
+					}
+				});
+
+				return res.status(200).send({
+					"message": "success",
+					"errors": []
+				});
+			});
+		} else {
+			fs.exists(dirpathUuid, function(isUuidDirExists) {
+				if (!isUuidDirExists) {
+					fs.mkdir(dirpathUuid, function(err) {
+						fs.writeFile(filepath, buffer, function(err) {
+							if(err) {
+								console.log(err);
+								return res.status(500).send({
+									message: 'Internal Server Error.',
+									error: [
+										{
+
+										}
+									]
+								});
+							}
+						});
+					});
+				} else {
+					fs.writeFile(filepath, buffer, function(err) {
+						if(err) {
+							console.log(err);
+							return res.status(500).send({
+								message: 'Internal Server Error.',
+								error: [
+									{
+
+									}
+								]
+							});
+						}
+					});
+				}
+			});
+
+			return res.status(200).send({
+				"message": "success",
+				"errors": []
+			});
+		}
+	});
 //
 //
 // });
